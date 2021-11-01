@@ -36,7 +36,7 @@ function BarChart() {
             options={{ ...options, xaxis: mockData.labels}}
             series={mockData.series}
             type="bar"
-            heigh="240"
+            height="240"
         />
     );
 }
