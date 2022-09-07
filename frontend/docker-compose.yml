@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  vendas-front:
+    build: .
+    ports:
+      - 80:3000
