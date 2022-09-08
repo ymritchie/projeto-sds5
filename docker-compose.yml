@@ -1,24 +1,9 @@
 version: "3"
+
 services:
   frontend:
-    image: front-dsvendas:latest
+    build: ./frontend
     hostname: frontend
     container_name: frontend
     ports:
       - 80:3000
-    depends_on:
-      - "api"
-    networks:
-      - dsvendas  
-  api:
-    image: dsvendas:latest 
-    hostname: backend
-    container_name: backend
-    ports:
-      - 8080:8080
-    networks:
-      - dsvendas
-
-networks:
-  dsvendas:
-    driver: bridge  
