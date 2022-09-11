@@ -20,7 +20,7 @@ phases:
       - echo Build finalizado com sucesso
       - echo Fazendo push para o ECR...
       - docker push $REPOSITORY_URI:latest
-      - dokcer push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo artefato da imagem para a o ECS
       - printf  '[{"name":"infovendas","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
