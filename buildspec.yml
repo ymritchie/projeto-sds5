@@ -11,13 +11,13 @@ phases:
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
-      - echo Buid iniciado em `date`
-      - echo Gerandio Imagem...
+      - echo Build iniciado em `date`
+      - echo Gerando Imagem...
       - docker build -f ./frontend/Dockerfile -t $REPOSITORY_URI:latest ./frontend
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
-      - echo Buid finalizado com sucesso
+      - echo Build finalizado com sucesso
       - echo Fazendo push para o ECR...
       - docker push $REPOSITORY_URI:latest
       - dokcer push $REPOSITORY_URI:$IMAGE_TAG
