@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Fazendo login no ECR...
+      - aws --version
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 839578859669.dkr.ecr.us-east-1.amazonaws.com
+      - REPOSITORY_URI=839578859669.dkr.ecr.us-east-1.amazonaws.com/infovendas
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - echo Buid iniciado em `date`
+      - echo Gerandio Imagem...
+      - docker build -f ./frontend/Dockerfile -t $REPOSITORY_URI:latest ./frontend
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Buid finalizado com sucesso
+      - echo Fazendo push para o ECR...
+      - docker push $REPOSITORY_URI:latest
+      - dokcer push $REPOSITORY_URI:$IMAGE_TAG
+      - echo artefato da imagem para a o ECS
+      - printf  '[{"name":"infovendas","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
+
+
+

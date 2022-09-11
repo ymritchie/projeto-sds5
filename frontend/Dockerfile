@@ -1,10 +1,8 @@
 FROM node:14-alpine
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY package.json ./
-
-COPY yarn.lock ./
+COPY package.json yarn.lock ./
 
 RUN REACT_APP_BACKEND_URL=http://apivendas.ymritchie.ga yarn install --frozen-lockfile
 
